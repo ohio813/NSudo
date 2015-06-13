@@ -1,68 +1,68 @@
-//Mouri_Naruto NSudo 2.1 (Build 809)
+//Mouri_Naruto NSudo 2.2 (Build 861)
 //(C) CopyRight 2015 Mouri_Naruto
 
 #include "stdafx.h"
 #include "NSudo.h"
 
-#define NSudo_Title L"Mouri_Naruto NSudo"
-#define NSudo_Version L"2.1 (Build 809)"
-#define NSudo_CopyRight L"(C)2015 Mouri_Naruto. All rights reserved."
+#define NSudo_Title L"NSudo 2.2 (Build 861) By Mouri_Naruto"
+#define NSudo_HelpText L"NSudo [选项]\n\n选项:\n-TI 以System权限(具有TrustedInstaller令牌)运行命令提示符\n-System 以System权限运行命令提示符\n-Help 弹出命令行帮助"
 
 #define ReturnMessage(lpText) MessageBoxW(NULL, (lpText), NSudo_Title, NULL)
-bool GetPrivilege(HANDLE ProcessHandle, LPCWSTR lpName);
-bool GetToken(HANDLE TokenHandle, LPCWSTR lpName);
-void GetAllTokens(HANDLE TokenHandle);
-void About();
+
+#define StrLenW(str) sizeof(str) / 2 - 1
+
 void GetSystemPrivilege(LPWSTR szCMDLine);
 void GetTIToken(LPWSTR szCMDLine);
+void CreateCMDShell(LPCWSTR lpConsoleTitle);
+
+#include "Privilege.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
-{
+{	
 	if (!GetPrivilege(GetCurrentProcess(),SE_DEBUG_NAME))
 	{
 		ReturnMessage(L"进程调试权限获取失败");
 		return -1;
 	}
-	
-	wchar_t szCMDPath[260], szCMDLineSystem[260], szCMDLineTI[260];
 
-	GetSystemWindowsDirectoryW(szCMDPath, 260); //获取Windows目录
-
-	if (GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "ZwWow64ReadVirtualMemory64")) //判断是否是64位OS
-	{
-		wcscat_s(szCMDPath, 260, L"\\SysNative\\");  //64命令提示符路径
-	}
-	else
-	{
-		wcscat_s(szCMDPath, 260, L"\\System32\\");  //32命令提示符路径
-	}
-
-	wcscpy_s(szCMDLineSystem, 260, szCMDPath);
-	wcscpy_s(szCMDLineTI, 260, szCMDPath);
-	wcscat_s(szCMDLineSystem, 260, L"cmd.exe /K title " NSudo_Title L" - [System] & echo " NSudo_Title  L" " NSudo_Version L" & echo " NSudo_CopyRight);
-	wcscat_s(szCMDLineTI, 260, L"cmd.exe /K title " NSudo_Title L" - [System With TrustedInstaller Token] & echo " NSudo_Title  L" " NSudo_Version L" & echo " NSudo_CopyRight);
-
-	if (wcscmp(L"-TiShell", lpCmdLine) == 0)
-	{	
-		GetTIToken(szCMDLineTI);
-		ExitProcess(0);
-	}
-	else if (wcscmp(L"-TI", lpCmdLine) == 0 || wcscmp(L"-ti", lpCmdLine) == 0 || wcscmp(L"-Ti", lpCmdLine) == 0)
+	//内部命令行参数
+	if (StrCmpNIW(L"-TiShell", lpCmdLine, StrLenW(L"-TiShell")) == 0)
 	{
 		wchar_t szCMDLine[260];
 		GetModuleFileNameW(NULL, szCMDLine, 260);
-		wcscat_s(szCMDLine, 260, L" -TiShell");
+		wcscat_s(szCMDLine, 260, L" -GetTiShell");
+		GetTIToken(szCMDLine);
+		ExitProcess(0);
+	}
+	else if (StrCmpNIW(L"-GetSystemShell", lpCmdLine, StrLenW(L"-GetSystemShell")) == 0)
+	{
+		CreateCMDShell(L"NSudo - [System]");
+	}
+	else if (StrCmpNIW(L"-GetTiShell", lpCmdLine, StrLenW(L"-GetTiShell")) == 0)
+	{
+		CreateCMDShell(L"NSudo - [System With TrustedInstaller Token]");
+	}
+
+	//公开的命令行参数
+	if (StrCmpNIW(L"-TI", lpCmdLine, StrLenW(L"-TI")) == 0)
+	{
+		wchar_t szCMDLine[260];
+		GetModuleFileNameW(NULL, szCMDLine, 260);
+		StringCbCatW(szCMDLine, sizeof(szCMDLine), L" -TiShell");
 		GetSystemPrivilege(szCMDLine);
 		ExitProcess(0);
 	}
-	else if (wcscmp(L"-System", lpCmdLine) == 0 || wcscmp(L"-system", lpCmdLine) == 0 || wcscmp(L"-SYSTEM", lpCmdLine) == 0)
+	else if (StrCmpNIW(L"-System", lpCmdLine, StrLenW(L"-System")) == 0)
 	{
-		GetSystemPrivilege(szCMDLineSystem);
+		wchar_t szCMDLine[260];
+		GetModuleFileNameW(NULL, szCMDLine, 260);
+		StringCbCatW(szCMDLine, sizeof(szCMDLine), L" -GetSystemShell");
+		GetSystemPrivilege(szCMDLine);
 		ExitProcess(0);
 	}
-	else if (wcscmp(L"-Help", lpCmdLine) == 0 || wcscmp(L"-help", lpCmdLine) == 0 || wcscmp(L"-HELP", lpCmdLine) == 0)
+	else if (StrCmpNIW(L"-Help", lpCmdLine, StrLenW(L"-Help")) == 0)
 	{
-		About();
+		ReturnMessage(NSudo_HelpText);
 		ExitProcess(0);
 	}
 	else
@@ -71,7 +71,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 		TASKDIALOGCONFIG config = { 0 };
 		const TASKDIALOG_BUTTON buttons[] = {
 			{ 101, L"以所选权限运行命令提示符(&C)" },
-			{ 102, L"关于和命令行帮助(&A)" },
+			{ 102, L"命令行帮助(&H)" },
 		};
 		const TASKDIALOG_BUTTON choosebuttons[] = {
 			{ 201, L"System权限(具有TrustedInstaller令牌)(&T)" },
@@ -80,7 +80,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 
 		config.dwFlags = TDF_USE_HICON_MAIN | TDF_USE_HICON_FOOTER | TDF_EXPAND_FOOTER_AREA | TDF_ALLOW_DIALOG_CANCELLATION;
 		config.cbSize = sizeof(config);
-		config.pszWindowTitle = NSudo_Title L" " NSudo_Version;
+		config.pszWindowTitle = NSudo_Title;
 		config.cRadioButtons = ARRAYSIZE(choosebuttons);
 		config.pRadioButtons = choosebuttons;
 		config.pszMainInstruction = L"请选择你需要的权限";
@@ -100,16 +100,19 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 			{
 				wchar_t szCMDLine[260];
 				GetModuleFileNameW(NULL, szCMDLine, 260);
-				wcscat_s(szCMDLine, 260, L" -TiShell");
+				StringCbCatW(szCMDLine, sizeof(szCMDLine), L" -TiShell");
 				GetSystemPrivilege(szCMDLine);
 			}
 			else
 			{
-				GetSystemPrivilege(szCMDLineSystem);
+				wchar_t szCMDLine[260];
+				GetModuleFileNameW(NULL, szCMDLine, 260);
+				StringCbCatW(szCMDLine, sizeof(szCMDLine), L" -GetSystemShell");
+				GetSystemPrivilege(szCMDLine);
 			}
 			ExitProcess(0);
 		case 102:
-			About();
+			ReturnMessage(NSudo_HelpText);
 			_tWinMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 		default:
 			break;
@@ -117,15 +120,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	}
 	
 	return 0;
-}
-
-
-
-
-void About()
-{
-	ReturnMessage(NSudo_Title  L" " NSudo_Version L"\n" NSudo_CopyRight L"\n\n"
-		L"NSudo [选项]\n\n选项:\n-TI 以System权限(具有TrustedInstaller令牌)运行命令提示符\n-System 以System权限运行命令提示符\n-Help 弹出命令行帮助");
 }
 
 void GetSystemPrivilege(LPWSTR szCMDLine)
@@ -148,11 +142,11 @@ void GetSystemPrivilege(LPWSTR szCMDLine)
 		return;
 	}
 
-	if (Process32FirstW(hSnapshot, &ProcessEntry)) //便利进程
+	if (Process32FirstW(hSnapshot, &ProcessEntry)) //遍历进程
 	{
 		do
 		{
-			if (wcscmp(L"winlogon.exe", ProcessEntry.szExeFile) == 0) //寻找winlogon进程
+			if (StrCmpNIW(L"winlogon.exe", ProcessEntry.szExeFile, StrLenW(L"winlogon.exe")) == 0) //寻找winlogon进程
 			{
 				DWORD dwSessionID;
 				if (ProcessIdToSessionId(ProcessEntry.th32ProcessID, &dwSessionID)) //获取winlogon的会话ID
@@ -277,7 +271,7 @@ void GetTIToken(LPWSTR szCMDLine)
 	{
 		do
 		{
-			if (wcscmp(L"TrustedInstaller.exe", ProcessEntry.szExeFile) == 0) //寻找winlogon进程
+			if (StrCmpNIW(L"TrustedInstaller.exe", ProcessEntry.szExeFile, StrLenW(L"TrustedInstaller.exe")) == 0) //寻找TrustedInstaller进程
 			{
 				dwTIPID = ProcessEntry.th32ProcessID;
 				break;
@@ -330,7 +324,7 @@ void GetTIToken(LPWSTR szCMDLine)
 							NULL,
 							&StartupInfo,
 							&ProcessInfo))
-						{
+						{						
 							ReturnMessage(L"进程创建失败");
 						}
 					}
@@ -348,76 +342,44 @@ void GetTIToken(LPWSTR szCMDLine)
 	else ReturnMessage(L"TrustedInstaller.exe进程句柄打开失败");
 }
 
-//获取令牌权限(适用于进程)
-bool GetPrivilege(HANDLE ProcessHandle,LPCWSTR lpName)
+
+
+//创建命令提示符窗口
+void CreateCMDShell(LPCWSTR lpConsoleTitle)
 {
-	bool bRet = false;
-	HANDLE hCurrentProcessToken;
-	if (OpenProcessToken(ProcessHandle, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hCurrentProcessToken))
+	AllocConsole(); //开启控制台
+
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE); // 获取控制台句柄 
+
+	HICON hIcon = LoadIconW(GetModuleHandleW(NULL), MAKEINTRESOURCE(IDI_NSUDO));//获取图标句柄
+	SendMessageW(GetConsoleWindow(), WM_SETICON, ICON_SMALL, (LPARAM)hIcon);//设置控制台图标
+
+	SetConsoleTitleW(lpConsoleTitle); // 设置窗口标题 
+
+	COORD size = { 80, 300 };
+	SetConsoleScreenBufferSize(hOut, size); // 设置缓冲区大小 
+
+	wchar_t szCMDPath[260];
+
+	GetSystemWindowsDirectoryW(szCMDPath, 260); //获取Windows目录
+
+	if (GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "ZwWow64ReadVirtualMemory64")) //判断是否是64位OS
 	{
-		if (GetToken(hCurrentProcessToken, lpName)) bRet = true;
-		CloseHandle(hCurrentProcessToken);
+		StringCbCatW(szCMDPath, sizeof(szCMDPath), L"\\SysNative\\cmd.exe"); //64命令提示符路径
 	}
-	return bRet;
-}
-
-//获取令牌权限(适用于令牌)
-bool GetToken(HANDLE TokenHandle, LPCWSTR lpName)
-{
-	bool bRet = false;
-	if (TokenHandle != INVALID_HANDLE_VALUE)
+	else
 	{
-		LUID Luid;
-		if (LookupPrivilegeValueW(NULL, lpName, &Luid))
-		{
-			TOKEN_PRIVILEGES TokenPrivileges;
-
-			TokenPrivileges.PrivilegeCount = 1;
-			TokenPrivileges.Privileges[0].Luid = Luid;
-			TokenPrivileges.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-
-			if (AdjustTokenPrivileges(TokenHandle, FALSE, &TokenPrivileges, sizeof(TokenPrivileges), NULL, NULL)) bRet = true;
-		}
+		StringCbCatW(szCMDPath, sizeof(szCMDPath), L"\\System32\\cmd.exe"); //32命令提示符路径
 	}
-	return bRet;
-}
 
-//一键获取全部权限令牌(适用于令牌)
-void GetAllTokens(HANDLE TokenHandle)
-{
-	GetToken(TokenHandle,SE_CREATE_TOKEN_NAME);
-	GetToken(TokenHandle, SE_ASSIGNPRIMARYTOKEN_NAME);
-	GetToken(TokenHandle, SE_LOCK_MEMORY_NAME);
-	GetToken(TokenHandle, SE_INCREASE_QUOTA_NAME);
-	GetToken(TokenHandle, SE_UNSOLICITED_INPUT_NAME);
-	GetToken(TokenHandle, SE_MACHINE_ACCOUNT_NAME);
-	GetToken(TokenHandle, SE_TCB_NAME);
-	GetToken(TokenHandle, SE_SECURITY_NAME);
-	GetToken(TokenHandle, SE_TAKE_OWNERSHIP_NAME);
-	GetToken(TokenHandle, SE_LOAD_DRIVER_NAME);
-	GetToken(TokenHandle, SE_SYSTEM_PROFILE_NAME);
-	GetToken(TokenHandle, SE_SYSTEMTIME_NAME);
-	GetToken(TokenHandle, SE_PROF_SINGLE_PROCESS_NAME);
-	GetToken(TokenHandle, SE_INC_BASE_PRIORITY_NAME);
-	GetToken(TokenHandle, SE_CREATE_PAGEFILE_NAME);
-	GetToken(TokenHandle, SE_CREATE_PERMANENT_NAME);
-	GetToken(TokenHandle, SE_BACKUP_NAME);
-	GetToken(TokenHandle, SE_RESTORE_NAME);
-	GetToken(TokenHandle, SE_SHUTDOWN_NAME);
-	GetToken(TokenHandle, SE_DEBUG_NAME);
-	GetToken(TokenHandle, SE_AUDIT_NAME);
-	GetToken(TokenHandle, SE_SYSTEM_ENVIRONMENT_NAME);
-	GetToken(TokenHandle, SE_CHANGE_NOTIFY_NAME);
-	GetToken(TokenHandle, SE_REMOTE_SHUTDOWN_NAME);
-	GetToken(TokenHandle, SE_UNDOCK_NAME);
-	GetToken(TokenHandle, SE_SYNC_AGENT_NAME);
-	GetToken(TokenHandle, SE_ENABLE_DELEGATION_NAME);
-	GetToken(TokenHandle, SE_MANAGE_VOLUME_NAME);
-	GetToken(TokenHandle, SE_IMPERSONATE_NAME);
-	GetToken(TokenHandle, SE_CREATE_GLOBAL_NAME);
-	GetToken(TokenHandle, SE_TRUSTED_CREDMAN_ACCESS_NAME);
-	GetToken(TokenHandle, SE_RELABEL_NAME);
-	GetToken(TokenHandle, SE_INC_WORKING_SET_NAME);
-	GetToken(TokenHandle, SE_TIME_ZONE_NAME);
-	GetToken(TokenHandle, SE_CREATE_SYMBOLIC_LINK_NAME);
+	PROCESS_INFORMATION pi = { 0 };
+	STARTUPINFOW si = { 0 };
+	si.hStdOutput = hOut;
+	CreateProcessW(NULL, szCMDPath, NULL, NULL, FALSE, NULL, NULL, NULL, &si, &pi); //创建CMD
+
+	WaitForSingleObject(pi.hProcess, INFINITE); //等待进程结束
+
+	FreeConsole();
+
+	ExitProcess(0);//退出程序
 }

@@ -7,7 +7,6 @@
 
 #include "targetver.h"
 
-//#define WIN32_LEAN_AND_MEAN             //  从 Windows 头文件中排除极少使用的信息
 // Windows 头文件: 
 #include <windows.h>
 
@@ -16,6 +15,8 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+
+#include <strsafe.h>
 
 // TODO:  在此处引用程序需要的其他头文件
 #include <Tlhelp32.h>
@@ -28,10 +29,18 @@
 #include <CommCtrl.h>
 #pragma comment(lib,"comctl32.lib")
 
-#if defined _M_IX86
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
-#elif defined _M_X64
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
-#else
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
-#endif
+
+#include <Shlwapi.h>
+#pragma comment (lib, "Shlwapi.lib")
+
+/*
+int hr = MessageBoxW(NULL,
+L"是否允许通过NSudo调用这个程序\n"
+L"\n"
+L"命令行: cmd.exe /k \n"
+L"\n"
+L"提示:如果这个程序不是你主动调用的话，请点击取消\n",
+L"NSudo 2.2 (Build 861) By Mouri_Naruto",
+MB_YESNO | MB_ICONINFORMATION);
+*/

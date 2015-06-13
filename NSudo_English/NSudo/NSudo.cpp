@@ -119,13 +119,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	return 0;
 }
 
-
-
-
 void About()
 {
 	ReturnMessage(NSudo_Title  L" " NSudo_Version L"\n" NSudo_CopyRight L"\n\n"
-		L"NSudo [Options]\n\nOptions:\n[ -TI ] Run Command Prompt from System With TrustedInstaller Token\n[ -System ] Run Command Prompt from System\n[ -Help ] Show this Dialog");
+		L"NSudo [Options]\n\nOptions:\n[ -TI ] Run Command Prompt from System With TrustedInstaller Token\n[ -System ] Run Command Prompt from System\n[ -Help ] Show Help");
 }
 
 void GetSystemPrivilege(LPWSTR szCMDLine)
