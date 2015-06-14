@@ -7,6 +7,6 @@
     <UpdateDescription>自动更新程序</UpdateDescription>
   </Updater>
   <UpdateFileList>
-    <UpdateFile Version="2.1" Name="NSudo.exe" />
+    <UpdateFile Version="2.1" Name="nsudo.exe" />
   </UpdateFileList>
 </AutoUpdater>
