@@ -52,7 +52,38 @@
 <p>因此我认为，直接使用具有TI权限的CMD，再搭配其它第三方文件管理器（比如7zFM），会比修改NTFS权限设置来得方便、快速、安全~</p>
 
 <h1>
+<a id="未来版本31-debug准备要加的功能" class="anchor" href="#%E6%9C%AA%E6%9D%A5%E7%89%88%E6%9C%AC31-debug%E5%87%86%E5%A4%87%E8%A6%81%E5%8A%A0%E7%9A%84%E5%8A%9F%E8%83%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>未来版本(3.1 Debug)准备要加的功能</h1>
+
+<p>1.命令行支持（NSudoC.exe）
+2.常用调用列表的自定义
+3.支持创建AppContainer沙箱环境（使用该功能至少Windows 8）</p>
+
+<p>PS：”提供类似raymai97写的QuickAdmin右键菜单绕过UAC的选项“这个想法为了安全性考量而取消</p>
+
+<h1>
 <a id="改进日志" class="anchor" href="#%E6%94%B9%E8%BF%9B%E6%97%A5%E5%BF%97" aria-hidden="true"><span class="octicon octicon-link"></span></a>改进日志</h1>
+
+<p>NSudo 3.0</p>
+
+<p>1.支持外部应用调用（很抱歉让一些人等太久）</p>
+
+<p>2.增加了常用调用列表（暂时不支持自定义；未来MileStone2会加入）</p>
+
+<p>3.加入了降权功能（当然，是完美降权到UAC未提权前。当然原理不是用获取explorer令牌和创建计划任务）</p>
+
+<p>4.支持对权限令牌的自定义</p>
+
+<p>5.界面的完全重构（相对于2.x来说）</p>
+
+<p>6.代码优化（相对于NSudo 3.0 M1来说）</p>
+
+<p>7.加入NSudo SDK</p>
+
+<p>8.原生64位版本</p>
+
+<p>9.实现了调用外部程序无视WOW64重定向的方法（NSudoCreateProcess）</p>
+
+<p>10.WinPE支持（虽然没起多大作用）</p>
 
 <p>NSudo 2.1</p>
 
@@ -81,17 +112,7 @@
 
 <p>双击NSudo.exe根据提示操作即可</p>
 
-<p>命令行选项</p>
-
-<p>NSudo [选项]</p>
-
-<p>选项：</p>
-
-<p>-TI 以System权限(具有TrustedInstaller令牌)运行命令提示符</p>
-
-<p>-System 以System权限运行命令提示符</p>
-
-<p>-Help 弹出命令行帮助</p>
+<p>命令行选项(请静静等待3.1；3.1 Debug版最近会出)</p>
 
 <h1>
 <a id="注意事项" class="anchor" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9" aria-hidden="true"><span class="octicon octicon-link"></span></a>注意事项</h1>
@@ -103,10 +124,19 @@
 <h1>
 <a id="许可协议" class="anchor" href="#%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE" aria-hidden="true"><span class="octicon octicon-link"></span></a>许可协议</h1>
 
-<p>本工具使用GNU GPL 3.0协议，任何人都可以修改我的工具（前提起一个好听的名字，因为那已经不是我的工具）</p>
+<p>本工具使用MIT协议，任何人都可以修改我的工具（希望起一个好听的名字，因为那已经不是我的工具）</p>
 
 <h1>
-<a id="have-a-good-time----mouri_naruto" class="anchor" href="#have-a-good-time----mouri_naruto" aria-hidden="true"><span class="octicon octicon-link"></span></a>Have a good time -- Mouri_Naruto</h1>
+<a id="捐赠" class="anchor" href="#%E6%8D%90%E8%B5%A0" aria-hidden="true"><span class="octicon octicon-link"></span></a>捐赠</h1>
+
+<p>捐赠支付宝账号: <a href="mailto:wxh32lkk@live.cn">wxh32lkk@live.cn</a></p>
+
+<p>感谢cjy__05,mhxkx,tangmigoId,wondersnefu,xy137425740,月光光的大力支持（按照英文字母或拼音首字母排序）</p>
+
+<p>PS:还有一位好人捐赠了10元，但是没有注明ID;如果可以希望可以报上ID</p>
+
+<h1>
+<a id="have-a-good-time----20011010womicrosoft_mars和mouri_naruto共同参上" class="anchor" href="#have-a-good-time----20011010womicrosoft_mars%E5%92%8Cmouri_naruto%E5%85%B1%E5%90%8C%E5%8F%82%E4%B8%8A" aria-hidden="true"><span class="octicon octicon-link"></span></a>Have a good time -- 20011010wo，Microsoft_Mars和Mouri_Naruto共同参上</h1>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/MouriNaruto/NSudo">Nsudo</a> is maintained by <a href="https://github.com/MouriNaruto">MouriNaruto</a>.</span>
