@@ -66,7 +66,6 @@ Partial Class FormMain
         Me.全选AToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.撤销ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.重做ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.工具TToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.帮助HToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.关于AToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -117,6 +116,9 @@ Partial Class FormMain
         Me.CheckBoxBackground = New System.Windows.Forms.CheckBox()
         Me.ListViewFavorite = New System.Windows.Forms.ListView()
         Me.RichTextBoxMessage = New System.Windows.Forms.RichTextBox()
+        Me.FolderBrowserDialogMain = New System.Windows.Forms.FolderBrowserDialog()
+        Me.OpenFileDialogMain = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialogMain = New System.Windows.Forms.SaveFileDialog()
         Me.ContextMenuStripMain.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
         Me.GroupBoxControl.SuspendLayout()
@@ -327,7 +329,7 @@ Partial Class FormMain
         '
         '编辑EToolStripMenuItem
         '
-        Me.编辑EToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.剪切TToolStripMenuItem, Me.复制ToolStripMenuItem, Me.粘贴PToolStripMenuItem, Me.删除ToolStripMenuItem, Me.ToolStripSeparator1, Me.全选AToolStripMenuItem, Me.ToolStripSeparator2, Me.撤销ToolStripMenuItem, Me.重做ToolStripMenuItem})
+        Me.编辑EToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.剪切TToolStripMenuItem, Me.复制ToolStripMenuItem, Me.粘贴PToolStripMenuItem, Me.删除ToolStripMenuItem, Me.ToolStripSeparator1, Me.全选AToolStripMenuItem, Me.ToolStripSeparator2, Me.撤销ToolStripMenuItem})
         Me.编辑EToolStripMenuItem.Name = "编辑EToolStripMenuItem"
         Me.编辑EToolStripMenuItem.Size = New System.Drawing.Size(59, 21)
         Me.编辑EToolStripMenuItem.Text = "编辑(&E)"
@@ -384,13 +386,6 @@ Partial Class FormMain
         Me.撤销ToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
         Me.撤销ToolStripMenuItem.Text = "撤销(&U)"
         '
-        '重做ToolStripMenuItem
-        '
-        Me.重做ToolStripMenuItem.Name = "重做ToolStripMenuItem"
-        Me.重做ToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
-        Me.重做ToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
-        Me.重做ToolStripMenuItem.Text = "重做(&R)"
-        '
         '工具TToolStripMenuItem
         '
         Me.工具TToolStripMenuItem.Name = "工具TToolStripMenuItem"
@@ -407,13 +402,13 @@ Partial Class FormMain
         '关于AToolStripMenuItem
         '
         Me.关于AToolStripMenuItem.Name = "关于AToolStripMenuItem"
-        Me.关于AToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.关于AToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
         Me.关于AToolStripMenuItem.Text = "关于...(&A)"
         '
         '捐赠DToolStripMenuItem
         '
         Me.捐赠DToolStripMenuItem.Name = "捐赠DToolStripMenuItem"
-        Me.捐赠DToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.捐赠DToolStripMenuItem.Size = New System.Drawing.Size(126, 22)
         Me.捐赠DToolStripMenuItem.Text = "捐赠...(&D)"
         '
         '语言LanguageLToolStripMenuItem
@@ -874,6 +869,10 @@ Partial Class FormMain
         Me.RichTextBoxMessage.Text = ""
         Me.RichTextBoxMessage.WordWrap = False
         '
+        'OpenFileDialogMain
+        '
+        Me.OpenFileDialogMain.FileName = "OpenFileDialog1"
+        '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
@@ -974,7 +973,6 @@ Partial Class FormMain
     Friend WithEvents 全选AToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents 撤销ToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents 重做ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 工具TToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 帮助HToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 关于AToolStripMenuItem As ToolStripMenuItem
@@ -1000,4 +998,7 @@ Partial Class FormMain
     Friend WithEvents 开始队列ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 暂停队列ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 停止队列ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FolderBrowserDialogMain As FolderBrowserDialog
+    Friend WithEvents OpenFileDialogMain As OpenFileDialog
+    Friend WithEvents SaveFileDialogMain As SaveFileDialog
 End Class

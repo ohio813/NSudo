@@ -1,6 +1,6 @@
 ﻿
 Imports System.IO
-Public Enum Info
+Public Enum InfoType
     Message = 0
     ImportantMessage
     Warning
@@ -15,24 +15,24 @@ Public Class InfoText
     Sub New(ByVal RichTextBoxInfo As RichTextBox)
         RichTextInfo = RichTextBoxInfo
     End Sub
-    Public Sub Show(ByVal _Text As String, Optional ByVal _Type As Info = Info.Message)
+    Public Sub Show(ByVal _Text As String, Optional ByVal _Type As InfoType = InfoType.Message)
         _NormalText = ""
         _NormalText = "#" & DateTime.Now & "#"
         Select Case _Type
-            Case Info.Message
+            Case InfoType.Message
                 _NormalText &= "一般信息: "
                 _Color = Color.Green
-            Case Info.ImportantMessage
+            Case InfoType.ImportantMessage
                 _NormalText &= "重要信息: "
                 _Color = Color.Blue
-            Case Info.Warning
+            Case InfoType.Warning
                 _NormalText &= "警告:"
                 _Color = Color.OrangeRed
-            Case Info.Error
+            Case InfoType.Error
                 _NormalText &= "错误: "
                 _Color = Color.Red
                 Beep()
-            Case Info.FatalError
+            Case InfoType.FatalError
                 Beep()
                 SaveLogFile(My.Application.Info.DirectoryPath)
         End Select
@@ -68,9 +68,9 @@ Public Class InfoText
             sw.WriteLine("================================================================")
             sw.WriteLine("================================================================")
             sw.WriteLine("================================================================")
-            Show("成功保存文件至""" & _Temp & """", Info.ImportantMessage)
+            Show("成功保存文件至""" & _Temp & """", InfoType.ImportantMessage)
         Catch ex As Exception
-            Show(ex.Message, Info.Error)
+            Show(ex.Message, InfoType.Error)
             Return False
         Finally
             sw.Close()
