@@ -46,7 +46,8 @@ Public Class FormMain
     End Sub
 
     Private Sub ButtonFilter_Click(sender As Object, e As EventArgs) Handles ButtonFilter.Click
-
+        Dim FormFilter As FormFilter = New FormFilter
+        FormFilter.ShowDialog()
     End Sub
 
     Private Sub 保存配置文件ToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -55,6 +56,7 @@ Public Class FormMain
 
     Private Sub FormMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RichTextBoxMessage.ReadOnly = True
+        ButtonFilter.Enabled = False
         Info.Show("应用程序正常初始化...")
         Info.Show("操作系统:" & My.Computer.Info.OSFullName)
         Info.Show("是否64位进程:" & Environment.Is64BitProcess)
@@ -90,6 +92,7 @@ Public Class FormMain
             IsFolder = False
             TextBoxMoreArgs.Enabled = True
             ButtonShell.Enabled = True
+            ButtonFilter.Enabled = False
         End If
     End Sub
 
@@ -103,6 +106,7 @@ Public Class FormMain
             IsFolder = True
             TextBoxMoreArgs.Enabled = False
             ButtonShell.Enabled = False
+            ButtonFilter.Enabled = True
         End If
     End Sub
 

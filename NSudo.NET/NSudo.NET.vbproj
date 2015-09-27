@@ -113,6 +113,12 @@
     <Compile Include="SubForm\FormDonate.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SubForm\FormFilter.Designer.vb">
+      <DependentUpon>FormFilter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\FormFilter.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SubForm\FormSelectItems.Designer.vb">
       <DependentUpon>FormSelectItems.vb</DependentUpon>
     </Compile>
@@ -132,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\FormAbout.resx">
       <DependentUpon>FormAbout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\FormFilter.resx">
+      <DependentUpon>FormFilter.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
