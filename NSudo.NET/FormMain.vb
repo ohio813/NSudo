@@ -1,13 +1,18 @@
 ﻿Imports Updater
 Imports NSudo.NET.ClassMain
 Imports System.IO
+Structure OsVersionInfo
+    Public dwVersionInfoSize As Long
+    Public dwMajorVersion As Long
+    Public dwMinorVersion As Long
+    Public dwBuildNumber As Long
+    Public dwPlatform As Long
+    Public szCSDVersion As String
+End Structure
 
 Public Class FormMain
     Public Info As InfoText = New InfoText(RichTextBoxMessage)
     Public IsFolder As Boolean = False
-
-
-
     Private Sub ButtonJoin_Click(sender As Object, e As EventArgs) Handles ButtonJoin.Click
         If TextBoxPath.Text = "" And TextBoxMoreArgs.Text = "" Then
             Info.Show("路径与附加参数不能同时为空！", "Error")
