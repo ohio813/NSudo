@@ -1,18 +1,11 @@
 ﻿Imports Updater
 Imports NSudo.NET.ClassMain
 Imports System.IO
-Structure OsVersionInfo
-    Public dwVersionInfoSize As Long
-    Public dwMajorVersion As Long
-    Public dwMinorVersion As Long
-    Public dwBuildNumber As Long
-    Public dwPlatform As Long
-    Public szCSDVersion As String
-End Structure
 
 Public Class FormMain
     Public Info As InfoText = New InfoText(RichTextBoxMessage)
     Public IsFolder As Boolean = False
+    Public Filter As ArrayList
     Private Sub ButtonJoin_Click(sender As Object, e As EventArgs) Handles ButtonJoin.Click
         If TextBoxPath.Text = "" And TextBoxMoreArgs.Text = "" Then
             Info.Show("路径与附加参数不能同时为空！", "Error")
@@ -62,6 +55,7 @@ Public Class FormMain
     Private Sub FormMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RichTextBoxMessage.ReadOnly = True
         ButtonFilter.Enabled = False
+
         Info.Show("应用程序正常初始化...")
         Info.Show("操作系统:" & My.Computer.Info.OSFullName)
         Info.Show("是否64位进程:" & Environment.Is64BitProcess)
@@ -72,11 +66,11 @@ Public Class FormMain
     End Sub
 
     Private Sub 储存日志文件LToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 储存日志文件LToolStripMenuItem.Click
-        Info.SaveLogFile(My.Application.Info.DirectoryPath & "\NSudo.NETLog")
+        Info.SaveLogFile(My.Application.Info.DirectoryPath & "\Data\Log")
     End Sub
 
     Private Sub 储存日志文件LToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles 储存日志文件LToolStripMenuItem1.Click
-        Info.SaveLogFile(My.Application.Info.DirectoryPath & "\NSudo.NETLog")
+        Info.SaveLogFile(My.Application.Info.DirectoryPath & "\Data\Log")
     End Sub
 
     Private Sub ButtonUpdateNow_Click(sender As Object, e As EventArgs) Handles ButtonUpdateNow.Click

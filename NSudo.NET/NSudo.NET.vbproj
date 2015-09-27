@@ -54,12 +54,14 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.4.0.0.0.Fakes">
+      <HintPath>FakesAssemblies\System.Xml.4.0.0.0.Fakes.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="Updater, Version=1.0.100.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\NSudo\Updater\bin\Debug\Updater.exe</HintPath>
+    <Reference Include="Updater">
+      <HintPath>bin\Debug\Data\Bin\Updater.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
