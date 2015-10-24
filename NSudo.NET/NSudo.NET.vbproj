@@ -109,10 +109,22 @@
     <Compile Include="SubForm\FormAbout.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SubForm\FormControl.Designer.vb">
+      <DependentUpon>FormControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\FormControl.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SubForm\FormDonate.Designer.vb">
       <DependentUpon>FormDonate.vb</DependentUpon>
     </Compile>
     <Compile Include="SubForm\FormDonate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\FormFavorite.Designer.vb">
+      <DependentUpon>FormFavorite.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\FormFavorite.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SubForm\FormFilter.Designer.vb">
@@ -121,10 +133,28 @@
     <Compile Include="SubForm\FormFilter.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SubForm\FormInput.Designer.vb">
+      <DependentUpon>FormInput.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\FormInput.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SubForm\FormSelectItems.Designer.vb">
       <DependentUpon>FormSelectItems.vb</DependentUpon>
     </Compile>
     <Compile Include="SubForm\FormSelectItems.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\FormSettings.Designer.vb">
+      <DependentUpon>FormSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\FormSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\FormView.Designer.vb">
+      <DependentUpon>FormView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\FormView.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -141,8 +171,23 @@
     <EmbeddedResource Include="SubForm\FormAbout.resx">
       <DependentUpon>FormAbout.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\FormControl.resx">
+      <DependentUpon>FormControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\FormFavorite.resx">
+      <DependentUpon>FormFavorite.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubForm\FormFilter.resx">
       <DependentUpon>FormFilter.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\FormInput.resx">
+      <DependentUpon>FormInput.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\FormSettings.resx">
+      <DependentUpon>FormSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\FormView.resx">
+      <DependentUpon>FormView.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

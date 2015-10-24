@@ -36,8 +36,8 @@ Public Class InfoText
                 Beep()
                 SaveLogFile(My.Application.Info.DirectoryPath)
         End Select
-        FormMain.RichTextBoxMessage.SelectionColor = _Color
-        FormMain.RichTextBoxMessage.AppendText(_NormalText & _Text & vbNewLine)
+        FormInput.RichTextBoxMessage.SelectionColor = _Color
+        FormInput.RichTextBoxMessage.AppendText(_NormalText & _Text & vbNewLine)
         Text.Add(_NormalText & _Text)
     End Sub
     Public Function SaveLogFile(Optional ByVal _Path As String = "C:\NSudo.NETLog")
