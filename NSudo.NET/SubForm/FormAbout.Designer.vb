@@ -28,7 +28,7 @@ Partial Class FormAbout
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.NSudo.NET.My.Resources.Resources.NSudo
+
         Me.PictureBox1.Location = New System.Drawing.Point(4, 5)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(501, 131)
